@@ -15,12 +15,12 @@ Hello everyone! Please use this checklist over the next few weeks as you go thro
 ***
 
 Week 2: Your first repository
-- [√] 1. Install GitHub desktop and connect it to your GitHub account
-- [√] 2. Create a public repository and add a readme file
-- [√] 3. Publish the repository to GitHub
-- [√] 4. Add a new file in your local repository, commit the file addition, and push it to the remote repository on GitHub
-- [√] 5. Modify the new file (or the Readme file), commit the change, and push it to the remote repository on GitHub
-- [√] 6. Comment on this issue with a link to your repository
+- [ ] 1. Install GitHub desktop and connect it to your GitHub account
+- [ ] 2. Create a public repository and add a readme file
+- [ ] 3. Publish the repository to GitHub
+- [ ] 4. Add a new file in your local repository, commit the file addition, and push it to the remote repository on GitHub
+- [ ] 5. Modify the new file (or the Readme file), commit the change, and push it to the remote repository on GitHub
+- [ ] 6. Comment on this issue with a link to your repository
 
 Week 4: Rmarkdown
 - [ ] 1. Create a new public repository on GitHub Desktop and add a readme file.
