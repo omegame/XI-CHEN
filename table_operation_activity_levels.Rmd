@@ -1,0 +1,68 @@
+---
+title: "table_operation_activity_levels"
+author: "XI CHEN"
+date: "2024-10-31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Aim
+Create a clean and tidy table with pre and post operation activity levels.
+
+## Load Packages
+```{r load-packages}
+library(tidyverse)
+```
+
+## Read in Data
+The data is in the file "Hip Replacement CCG 1819.csv", and it contains patient reported outcomes for hip replacement procedures, form April 2018 to March 2019.
+It was downloaded from https://digital.nhs.uk/data-and-information/publications/statistical/patient-reported-outcome-measures-proms/for-hip-and-knee-replacement-procedures-april-2018-to-march-2019
+We also have the data dictionary for this dataset in "proms_data_diciionary.pdf".
+```{r read-data}
+hip_data <- read.csv("Data/Hip Replacement CCG 1819.csv") 
+```
+
+## Prepare the Data
+```{r inspect-data}
+glimpse(hip_data)
+```
+
+## Select Pre and Post Operation Activity Levels
+```{r select-pre-post-activity-levels}
+activity_levels <- hip_data %>% 
+  select('Pre.Op.Q.Activity', 'Post.Op.Q.Activity') %>% 
+  rename(Activity_Pre = 'Pre.Op.Q.Activity',
+         Activity_Post = 'Post.Op.Q.Activity'
+         )
+head(activity_levels)
+```
+
+## Removing Missing Data
+According to proms_data_dictionary.pdf, the field of Activity, value equals to 9 means missing data.
+```{r removing-data}
+activity_levels_noNA <- activity_levels %>%
+ drop_na() %>% 
+  filter(Activity_Pre !='9', Activity_Post !='9' )
+table(activity_levels_noNA)
+```
+## Check the Data is Tidy
+
+```{r tidy-data}
+head(activity_levels_noNA)
+
+tidy_activity_levels_noNA <- activity_levels_noNA %>% 
+  pivot_longer(c(Activity_Pre,Activity_Post),
+                 names_to = 'Time',
+                 names_prefix = 'Activity_',
+                 values_to = 'Activity'
+               )
+head(tidy_activity_levels_noNA)
+```
+## Create a Table with Pre and Post Operation Activity Levels
+```{r create-table}
+table(tidy_activity_levels_noNA)
+```
+

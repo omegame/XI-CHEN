@@ -1,0 +1,90 @@
+---
+title: "hip_replacement_gender"
+author: "XI CHEN"
+date: "2024-10-31"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Aim
+Plot 'EQ-5D Index' scores (a combination fo five key criteria concerning patients' self-reported general health) pre and post a hip replacement operation for different gender groups.
+
+## Load Packages
+
+```{r load-packages}
+library(tidyverse)
+```
+
+## Read in Data
+The data is in the file "Hip Replacement CCG 1819.csv", and it contains patient reported outcomes for hip replacement procedures, form April 2018 to March 2019.
+It was downloaded from https://digital.nhs.uk/data-and-information/publications/statistical/patient-reported-outcome-measures-proms/for-hip-and-knee-replacement-procedures-april-2018-to-march-2019
+We also have the data dictionary for this dataset in "proms_data_diciionary.pdf".
+
+```{r read-in-data}
+hip_data <- read.csv("Data/Hip Replacement CCG 1819.csv")
+```
+
+## Prepare the Data
+
+```{r inspect-data}
+glimpse(hip_data)
+```
+
+## Select gender and quality of life score pre and post operation
+```{r select-gender-EQ5D}
+gender_EQ5D <- hip_data %>% 
+  select('Gender','Pre.Op.Q.EQ5D.Index','Post.Op.Q.EQ5D.Index') %>%
+  rename(EQ5D_Pre = 'Pre.Op.Q.EQ5D.Index',
+         EQ5D_Post = 'Post.Op.Q.EQ5D.Index'
+         )
+
+head(gender_EQ5D)
+```
+
+## Remove Missing Values
+```{r missing-values}
+gender_EQ5D$Gender %>% unique()
+gender_EQ5D$Gender %>% table()
+gender_EQ5D$Gender %>% summary()
+
+gender_EQ5D_noNA <- gender_EQ5D %>% 
+  drop_na() %>% 
+  filter(Gender !='*')
+
+table(gender_EQ5D_noNA$Gender)
+summary(gender_EQ5D_noNA)
+```
+## Check the Data is Tidy
+```{r tidy-data}
+head(gender_EQ5D_noNA)
+
+tidy_gender_EQ5D_noNA <- gender_EQ5D_noNA %>% 
+  pivot_longer(c(EQ5D_Pre,EQ5D_Post),
+                names_to = 'Time',
+                names_prefix = 'EQ5D_',
+                values_to = 'EQ5D'
+                ) 
+
+tidy_gender_EQ5D_noNA$Gender <- factor(tidy_gender_EQ5D_noNA$Gender, 
+                                       levels = c(1, 2), 
+                                       labels = c("Male", "Female")
+                                       )
+
+head(tidy_gender_EQ5D_noNA)
+```
+## Plot quality of life pre and operation for each gender group
+
+```{r plot-EQ5D}
+
+tidy_gender_EQ5D_noNA$Time <- factor(tidy_gender_EQ5D_noNA$Time,levels = c('Pre','Post'))
+
+tidy_gender_EQ5D_noNA %>% 
+  ggplot() +
+  geom_boxplot(aes(x = Time, y = EQ5D, colour = Gender))
+```
+
