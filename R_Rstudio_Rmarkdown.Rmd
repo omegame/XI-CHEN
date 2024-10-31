@@ -33,5 +33,9 @@ After that you'll need to restart Rstudio and run: tinytex::install_tinytex()
 
 Try it with this Rmarkdown document, as you will need to create pdf outputs to submit your assignments. 
 
+## Aim
+To learn how to use R Studio and M markdown.
 
+## Outcome
+It's hard to unstand the code.
 
