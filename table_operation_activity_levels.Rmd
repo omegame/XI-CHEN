@@ -36,8 +36,8 @@ glimpse(hip_data)
 ```{r select-pre-post-activity-levels}
 activity_levels <- hip_data %>% 
   select('Pre.Op.Q.Activity', 'Post.Op.Q.Activity') %>% 
-  rename(Activity_Pre = 'Pre.Op.Q.Activity',
-         Activity_Post = 'Post.Op.Q.Activity'
+  rename(Pre = 'Pre.Op.Q.Activity',
+         Post = 'Post.Op.Q.Activity',
          )
 head(activity_levels)
 ```
@@ -47,8 +47,8 @@ According to proms_data_dictionary.pdf, the field of Activity, value equals to 9
 ```{r removing-data}
 activity_levels_noNA <- activity_levels %>%
  drop_na() %>% 
-  filter(Activity_Pre !='9', Activity_Post !='9' )
-table(activity_levels_noNA)
+  filter(Pre !='9', Post !='9' )
+head(activity_levels_noNA)
 ```
 ## Check the Data is Tidy
 
@@ -56,7 +56,7 @@ table(activity_levels_noNA)
 head(activity_levels_noNA)
 
 tidy_activity_levels_noNA <- activity_levels_noNA %>% 
-  pivot_longer(c(Activity_Pre,Activity_Post),
+  pivot_longer(c(Pre,Post),
                  names_to = 'Time',
                  names_prefix = 'Activity_',
                  values_to = 'Activity'

@@ -73,7 +73,7 @@ tidy_patient_tests
 We will use the same data as last week. So read in the data from file fev.csv and save it in an object called fev_data:
 
 ```{r}
-fev_data <-read_csv("data/fev.csv")
+# Add your code here!
 ```
 
 Tip: If you got an error that "fev.csv" does not exist, check that you are working in the correct directory!
@@ -107,11 +107,7 @@ c(1,3,5) %>%
 --> How would you drop the 1st, 3rd and 5th column?
 
 ```{r}
-fev_data <- read_csv(here("data/fev.csv"))
-drop_fev_data <- fev_data %>% 
-  select(-1, -3, -5)
-
-print(drop_fev_data)
+# Add your code here!
 ```
 
 
@@ -274,19 +270,12 @@ table(fev_data$age,fev_data$smoke)
 --> **Problem 1**: Which subjects are male and which are female? (i.e. what does sex == 1 mean?)
 
 ```{r}
-fev_data %>% 
-  count(sex)
-
-fev_data %>%
-  group_by(sex) %>%
-  summarize(n(), mean(age), mean(height), mean(fev))
+# Add your code here!
 ```
 --> **Problem 2**: Why do smokers appear to have better lung function (higher forced expiratory volume - FEV)?
 
 ```{r}
-fev_data %>%
-  group_by(smoke) %>%
-  summarize(mean(fev), mean(age), mean(height))
+# Add your code here!
 ```
 
 Useful function: rename
